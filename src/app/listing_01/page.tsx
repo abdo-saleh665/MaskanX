@@ -2,7 +2,7 @@ import ListingOne from "@/components/inner-listing/listing-01";
 import Wrapper from "@/layouts/Wrapper";
 
 export const metadata = {
-   title: "Listing One HOZN - Real Estate React Next js",
+   title: "Listing One MaskanX — Property Platform",
 };
 const index = () => {
    return (

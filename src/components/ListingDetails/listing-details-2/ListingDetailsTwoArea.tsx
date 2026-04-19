@@ -22,7 +22,7 @@ const ListingDetailsTwoArea = () => {
       <div className="listing-details-one theme-details-one bg-pink pt-120 lg-pt-100 pb-150 xl-pb-120">
          <div className="video-wrapper">
             <video preload="" muted={true} playsInline={true} autoPlay={true} loop={true}>
-               <source src="https://creativegigstf.com/video/intro_4.mp4" type="video/mp4" />
+               <source src="/assets/video/intro.mp4" type="video/mp4" />
             </video>
          </div>
          <div className="container">

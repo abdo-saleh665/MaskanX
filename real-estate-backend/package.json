@@ -1,15 +1,15 @@
 {
-  "name": "real-estate-backend",
+  "name": "maskanx-server",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
     "dev": "ts-node src/server.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
+  "keywords": ["real-estate", "property", "maskanx", "express", "sequelize"],
+  "author": "Abdelrahman Yousry Saleh <abdo.saleh2399@gmail.com>",
+  "license": "MIT",
+  "description": "MaskanX Real Estate Platform — Backend API Server",
   "dependencies": {
     "bcryptjs": "^3.0.2",
     "cors": "^2.8.5",

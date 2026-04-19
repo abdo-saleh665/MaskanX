@@ -59,7 +59,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
       }
   
       // ✅ Create JWT
-      const token = jwt.sign({ id: user.id }, "your_secret_key", { expiresIn: "1h" });
+      const token = jwt.sign({ id: user.id }, SECRET_KEY, { expiresIn: "1h" });
   
       res.json({ message: "Login successful!", token });
     } catch (error) {

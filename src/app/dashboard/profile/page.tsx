@@ -2,7 +2,7 @@ import DashboardProfile from "@/components/dashboard/profile";
 import Wrapper from "@/layouts/Wrapper";
 
 export const metadata = {
-   title: "Dashboard Profile HOZN - Real Estate React Next js",
+   title: "Dashboard Profile MaskanX — Property Platform",
 };
 const index = () => {
    return (
