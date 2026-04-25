@@ -1,7 +1,3 @@
-<p align="center">
-  <img src="public/assets/images/logo/logo_01.svg" alt="MaskanX Logo" width="200" />
-</p>
-
 <h1 align="center">MaskanX — مسكن إكس</h1>
 
 <p align="center">
@@ -32,7 +28,6 @@
 - [System Architecture](#-system-architecture)
 - [Tech Stack](#-tech-stack)
 - [Features](#-features)
-- [Database Design](#-database-design-erd)
 - [API Reference](#-api-reference)
 - [Getting Started](#-getting-started)
 - [Project Structure](#-project-structure)
@@ -194,37 +189,6 @@ Built with a strict **MVC architecture**, the platform empowers users to browse,
 - User profile management with editable fields
 - Interactive charts and data visualization
 
----
-
-## 📐 Database Design (ERD)
-
-<p align="center">
-  <img src="ERD.png" alt="Entity Relationship Diagram" width="800" />
-</p>
-
-### Relationships
-
-```
-  User (1) ──────< (*) Property      A user can own many properties
-  User (1) ──────< (*) Booking       A user can make many bookings
-  User (1) ──────< (*) Review        A user can write many reviews
-  User (1) ──────< (*) Inquiry       A user can send many inquiries
-  Property (1) ──< (*) Booking       A property can have many bookings
-  Property (1) ──< (*) Review        A property can receive many reviews
-  Property (1) ──< (*) Inquiry       A property can receive many inquiries
-```
-
-### Tables Summary
-
-| Table | Key Columns | Constraints |
-|:------|:------------|:------------|
-| `users` | id, name, email, password, role | email UNIQUE, password NOT NULL |
-| `properties` | id, title, price, location, owner_id | FK → users, price NOT NULL |
-| `bookings` | id, property_id, user_id, start_date, end_date | FK → users, FK → properties |
-| `reviews` | id, property_id, user_id, rating, comment | FK → users, FK → properties |
-| `inquiries` | id, property_id, user_id, message, status | FK → users, FK → properties |
-
----
 
 ## 📡 API Reference
 
