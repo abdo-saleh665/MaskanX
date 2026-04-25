@@ -158,7 +158,7 @@ const UseShortedProperty = ({ itemsPerPage, page }: DataType) => {
    useEffect(() => {
       let filterPrice = all_property.filter((j) => j.price >= priceValue[0] && j.price <= priceValue[1]);
       setProperties(filterPrice)
-   }, [priceValue]);
+   }, [priceValue, all_property, setProperties]);
 
    const handlePriceChange = (val: number[]) => {
       setPriceValue(val)

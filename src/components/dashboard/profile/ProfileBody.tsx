@@ -1,5 +1,5 @@
 "use client"
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import DashboardHeaderTwo from "@/layouts/headers/dashboard/DashboardHeaderTwo";
 import Image from "next/image";
 import UserAvatarSetting from "./UserAvatarSetting";
@@ -16,10 +16,17 @@ const ProfileBody = () => {
    const [lastName, setLastName] = useState("");
    const [phoneNumber, setPhoneNumber] = useState("");
    const [about, setAbout] = useState("");
-   const token = localStorage.getItem("token"); 
+
+   const token = useMemo(() => {
+      if (typeof window !== "undefined") {
+         return localStorage.getItem("token");
+      }
+      return null;
+   }, []); 
 
    useEffect(() => {
       const fetchUserData = async () => {
+         if (!token) return;
          try {
             const res = await fetch("http://localhost:5000/api/profile", {
                headers: {
@@ -44,7 +51,7 @@ const ProfileBody = () => {
       };
 
       fetchUserData();
-   }, []);
+   }, [token]);
 
    const handleSave = async () => {
       try {

@@ -3,7 +3,6 @@ import Image from "next/image"
 import Link from "next/link";
 import { usePathname } from 'next/navigation'
 
-import dashboardLogo from "@/assets/images/logo/logo_01.svg";
 import dashboardIconActive_1 from "@/assets/images/dashboard/icon/icon_1_active.svg";
 import dashboardIcon_1 from "@/assets/images/dashboard/icon/icon_1.svg";
 import dashboardIconActive_2 from "@/assets/images/dashboard/icon/icon_2_active.svg";
@@ -33,8 +32,8 @@ const DashboardHeaderOne = ({ isActive, setIsActive }: any) => {
       <aside className={`dash-aside-navbar ${isActive ? "show" : ""}`}>
          <div className="position-relative">
             <div className="logo d-md-block d-flex align-items-center justify-content-between plr bottom-line pb-30">
-               <Link href="/dashboard-index">
-                  <Image src={dashboardLogo} alt="" />
+               <Link href="/dashboard/dashboard-index" className="d-flex align-items-center">
+                  <h4 className="m-0 fw-bold">MaskanX</h4>
                </Link>
                <button onClick={() => setIsActive(false)} className="close-btn d-block d-md-none"><i className="fa-light fa-circle-xmark"></i></button>
             </div>

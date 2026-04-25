@@ -1,4 +1,6 @@
 import Image, { StaticImageData } from "next/image"
+import { useEffect, useState } from "react"
+import api from "@/services/api"
 
 import icon_1 from "@/assets/images/dashboard/icon/icon_28.svg"
 
@@ -12,39 +14,41 @@ interface DataType {
    class_name?: string;
 }
 
-const message_data: DataType[] = [
-   {
-      id: 1,
-      name: "Jenny Rio.",
-      date: "Aug 22",
-      title: "Work inquiry from google.",
-      desc: "Hello, This is Jenny from google. We’r the largest online platform offer...",
-      icon: icon_1,
-      class_name: "read border-0 pt-0"
-   },
-   {
-      id: 2,
-      name: "Hasan Islam.",
-      date: "May 22",
-      title: "Product Designer Opportunities",
-      desc: "Hello, Greeting from Uber. Hope you doing great. I am approcing to you for..",
-      class_name: "primary"
-   },
-   {
-      id: 3,
-      name: "Jakie Chan",
-      date: "July 22",
-      title: "Hunting Marketing Specialist",
-      desc: "Hello, This is Jannat from HuntX. We offer business solution to our client..",
-   },
-]
+const message_data: DataType[] = []
 
 const RecentMessage = () => {
+   const [messages, setMessages] = useState<DataType[]>([])
+   const [loading, setLoading] = useState(true)
+
+   useEffect(() => {
+      const fetchMessages = async () => {
+         try {
+            const response = await api.get("/inquiries/my-inquiries")
+            const data = response.data.map((item: any) => ({
+               id: item.id,
+               name: item.name || "Unknown",
+               date: new Date(item.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric" }),
+               title: item.subject || "New Inquiry",
+               desc: item.message,
+               class_name: item.status === "read" ? "read border-0 pt-0" : ""
+            }))
+            setMessages(data)
+         } catch (error) {
+            console.error("Failed to fetch messages:", error)
+         } finally {
+            setLoading(false)
+         }
+      }
+      fetchMessages()
+   }, [])
+
+const displayData = messages.length > 0 ? messages : message_data
+
    return (
       <div className="message-wrapper">
          <div className="message-sidebar border-0">
             <div className="email-read-panel">
-               {message_data.map((item) => (
+               {displayData.map((item) => (
                   <div key={item.id} className={`email-list-item ${item.class_name}`}>
                      <div className="email-short-preview position-relative">
                         <div className="d-flex align-items-center justify-content-between">

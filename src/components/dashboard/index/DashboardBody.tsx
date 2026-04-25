@@ -3,12 +3,15 @@ import Image, { StaticImageData } from "next/image"
 import NiceSelect from "@/ui/NiceSelect"
 import RecentMessage from "./RecentMessage"
 import DashboardHeaderTwo from "@/layouts/headers/dashboard/DashboardHeaderTwo"
+import AuthGuard from "../AuthGuard"
+import api from "@/services/api"
 
 import icon_1 from "@/assets/images/dashboard/icon/icon_12.svg"
 import icon_2 from "@/assets/images/dashboard/icon/icon_13.svg"
 import icon_3 from "@/assets/images/dashboard/icon/icon_14.svg"
 import icon_4 from "@/assets/images/dashboard/icon/icon_15.svg"
 import DashboardChart from "./DashboardChart"
+import { useEffect, useState } from "react"
 
 interface DataType {
    id: number;
@@ -18,47 +21,52 @@ interface DataType {
    class_name?: string;
 }
 
-const dashboard_card_data: DataType[] = [
-   {
-      id: 1,
-      icon: icon_1,
-      title: "All Properties",
-      value: "1.7k+",
-      class_name: "skew-none",
-   },
-   {
-      id: 2,
-      icon: icon_2,
-      title: "Total Pending",
-      value: "03",
-   },
-   {
-      id: 3,
-      icon: icon_3,
-      title: "Total Views",
-      value: "4.8k",
-   },
-   {
-      id: 4,
-      icon: icon_4,
-      title: "Total Favourites",
-      value: "07",
-   },
-]
+const dashboard_card_data: DataType[] = []
 
 const DashboardBody = () => {
+   const [stats, setStats] = useState<any>(null)
+   const [loading, setLoading] = useState(true)
 
    const selectHandler = (e: any) => { };
 
-   return (
-      <div className="dashboard-body">
-         <div className="position-relative">
+   useEffect(() => {
+      const fetchStats = async () => {
+         try {
+            const response = await api.get("/stats")
+            setStats(response.data)
+         } catch (error) {
+            console.error("Failed to fetch stats:", error)
+         } finally {
+            setLoading(false)
+         }
+      }
+      fetchStats()
+   }, [])
+
+   const getValue = (key: string) => {
+      if (!stats) return "..."
+      const val = stats[key]
+      if (typeof val === 'number') return val >= 1000 ? `${(val / 1000).toFixed(1)}k` : val.toString()
+      return val?.toString() || "0"
+   }
+
+   const cardData = [
+      { id: 1, icon: icon_1, title: "All Properties", value: getValue("totalProperties"), class_name: "skew-none" },
+      { id: 2, icon: icon_2, title: "Total Pending", value: getValue("totalPending") },
+      { id: 3, icon: icon_3, title: "Total Views", value: getValue("totalViews") },
+      { id: 4, icon: icon_4, title: "Total Favourites", value: getValue("totalFavourites") },
+   ]
+
+return (
+      <AuthGuard>
+        <div className="dashboard-body">
+          <div className="position-relative">
             <DashboardHeaderTwo title="Dashboard" />
 
             <h2 className="main-title d-block d-lg-none">Dashboard</h2>
             <div className="bg-white border-20">
                <div className="row">
-                  {dashboard_card_data.map((item) => (
+                  {cardData.map((item) => (
                      <div key={item.id} className="col-lg-3 col-6">
                         <div className={`dash-card-one bg-white border-30 position-relative mb-15 ${item.class_name}`}>
                            <div className="d-sm-flex align-items-center justify-content-between">
@@ -108,8 +116,9 @@ const DashboardBody = () => {
                   </div>
                </div>
             </div>
-         </div>
-      </div>
+          </div>
+        </div>
+      </AuthGuard>
    )
 }
 

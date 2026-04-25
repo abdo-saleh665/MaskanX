@@ -39,7 +39,7 @@ const FooterFive = () => {
                      <div className="footer-intro">
                         <div className="logo mb-20">
                            <Link href="/">
-                              <Image src={footerLogo} alt="" />
+                              <h4 className="m-0 fw-bold" style={{ color: "inherit" }}>MaskanX</h4>
                            </Link>
                         </div>
                         <p className="mb-45 md-mb-20">11910 Cairo Suite 210, Kafralshakh , Cairo, Egypt</p>

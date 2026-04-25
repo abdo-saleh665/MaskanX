@@ -21,15 +21,15 @@ const HeaderThree = () => {
                   <div className="d-flex align-items-center">
                      <div className="logo order-lg-0">
                         <Link href="/" className="d-flex align-items-center">
-                           <Image src={logo_1} alt="" />
+                           <h4 className="m-0 fw-bold" style={{ color: "inherit" }}>MaskanX</h4>
                         </Link>
                      </div>
 
                      <div className="right-widget ms-auto me-3 me-lg-0 order-lg-4">
                         <ul className="d-flex align-items-center style-none">
-                           <li className="d-flex align-items-center login-btn-one">
-                              <i className="fa-regular fa-lock"></i><Link href="#" data-bs-toggle="modal" data-bs-target="#loginModal" className="fw-500 tran3s">Login <span className="d-none d-sm-inline-block">/ Sign up</span></Link>
-                           </li>
+<li className="d-flex align-items-center login-btn-one">
+                               <Link href="#" data-bs-toggle="modal" data-bs-target="#loginModal" className="fw-500 tran3s">Login <span className="d-none d-sm-inline-block">/ Sign up</span></Link>
+                            </li>
                            <li className="d-none d-md-inline-block ms-3 ms-xl-4 me-xl-4">
                               <Link href="/dashboard/add-property" className="btn-five md rounded-0" target="_blank"><span>Add Listing</span> <i className="fa-thin fa-arrow-up-right"></i></Link>
                            </li>

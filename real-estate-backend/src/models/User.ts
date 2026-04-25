@@ -27,7 +27,17 @@ export class User extends Model {
   })
   termsAccepted!: boolean;
 
-  
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+    defaultValue: "user",
+    validate: {
+      isIn: [["user", "admin"]],
+    }
+  })
+  role!: string;
+
+
   @Column({
     type: DataType.STRING,
     allowNull: true, 

@@ -7,6 +7,7 @@ import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import Image from "next/image";
+import api from "@/services/api";
 
 import OpenEye from "@/assets/images/icon/icon_68.svg";
 
@@ -28,23 +29,17 @@ const LoginForm = () => {
 
    const onSubmit = async (data: FormData) => {
       try {
-         const response = await fetch("http://localhost:5000/api/auth/login", { 
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(data),
-         });
+         const response = await api.post("/auth/login", data);
 
-         const result = await response.json();
-
-         if (response.ok) {
-            toast.success("Login successfully", { position: "top-center" });
-            reset();
-            router.push("/dashboard/dashboard-index"); 
-         } else {
-            toast.error(result.message || "Invalid email or password");
+         if (response.data.token) {
+            localStorage.setItem("token", response.data.token);
          }
-      } catch (error) {
-         toast.error("An error occurred. Please try again.");
+
+         toast.success("Login successfully", { position: "top-center" });
+         reset();
+         router.push("/dashboard/dashboard-index");
+      } catch (error: any) {
+         toast.error(error.message || "Invalid email or password");
       }
    };
 

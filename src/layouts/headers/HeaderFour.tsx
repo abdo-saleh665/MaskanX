@@ -22,7 +22,7 @@ const HeaderFour = () => {
                   <div className="d-flex align-items-center">
                      <div className="logo order-lg-0">
                         <Link href="/" className="d-flex align-items-center">
-                           <Image src={logo_1} alt="" />
+                           <h4 className="m-0 fw-bold" style={{ color: "inherit" }}>MaskanX</h4>
                         </Link>
                      </div>
 

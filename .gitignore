@@ -34,3 +34,13 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# large media files
+*.mp4
+*.mov
+*.avi
+
+# backend
+real-estate-backend/node_modules/
+real-estate-backend/logs/
+real-estate-backend/dist/

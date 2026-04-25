@@ -58,7 +58,7 @@ const FooterTwo = () => {
                      <div className="footer-intro position-relative z-1 pt-70 pb-150 lg-pb-20">
                         <div className="logo mb-15">
                            <Link href="/">
-                              <Image src={footerLogo_1} alt="" />
+                              <h4 className="m-0 fw-bold" style={{ color: "inherit" }}>MaskanX</h4>
                            </Link>
                         </div>
                         <p className="mb-45 lg-mb-30 pe-2 pe-lg-5">{desc_2}</p>

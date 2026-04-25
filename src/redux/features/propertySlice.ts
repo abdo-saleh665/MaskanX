@@ -1,19 +1,32 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import properties from '@/data/inner-data/ListingData';
-
-interface Property {
-   id: number;
-}
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import api from '@/services/api';
+import { Property } from '@/types/property';
 
 interface PropertyState {
-   properties: Property[] | any[];
-   property: Property | {};
+  properties: Property[];
+  property: Property | {};
+  loading: boolean;
+  error: string | null;
 }
 
 const initialState: PropertyState = {
-   properties: properties,
-   property: {},
+  properties: [],
+  property: {},
+  loading: false,
+  error: null,
 };
+
+export const fetchProperties = createAsyncThunk(
+  'properties/fetchProperties',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await api.get('/properties');
+      return response.data.properties;
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
 
 export const propertySlice = createSlice({
    name: 'properties',
@@ -22,6 +35,21 @@ export const propertySlice = createSlice({
       single_property: (state, action: PayloadAction<number>) => {
          state.property = state.properties.find((p) => Number(p.id) === Number(action.payload)) || {};
       },
+   },
+   extraReducers: (builder) => {
+      builder
+        .addCase(fetchProperties.pending, (state) => {
+          state.loading = true;
+          state.error = null;
+        })
+        .addCase(fetchProperties.fulfilled, (state, action) => {
+          state.loading = false;
+          state.properties = action.payload;
+        })
+        .addCase(fetchProperties.rejected, (state, action) => {
+          state.loading = false;
+          state.error = action.payload as string;
+        });
    },
 });
 

@@ -6,7 +6,7 @@ import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Image from "next/image";
-import axios from "axios";
+import api from "@/services/api";
 import { useRouter } from "next/navigation"; 
 
 
@@ -54,10 +54,16 @@ const RegisterForm = () => {
   const onSubmit = async (data: FormData) => {
     setLoading(true);
     try {
-      const response = await axios.post("http://localhost:5000/api/auth/signup", data);
+      const response = await api.post("/auth/signup", data);
+      const token = response.data.token;
 
-      if (response.status === 201) {
-        toast.success("Registration successful! Redirecting to login...", {
+      if (token) {
+        localStorage.setItem("token", token);
+        if (response.data.user) {
+            localStorage.setItem("user", JSON.stringify(response.data.user));
+        }
+        
+        toast.success("Welcome! Redirecting to dashboard...", {
           position: "top-center",
         });
 

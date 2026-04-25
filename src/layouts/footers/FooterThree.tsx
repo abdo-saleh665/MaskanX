@@ -16,7 +16,7 @@ const FooterThree = () => {
                      <div className="footer-intro pe-xxl-5 pe-xl-3">
                         <div className="logo mb-15">
                            <Link href="/">
-                              <Image src={footerLogo} alt="" />
+                              <h4 className="m-0 fw-bold" style={{ color: "inherit" }}>MaskanX</h4>
                            </Link>
                         </div>
                         <p className="mb-45 lg-mb-30">11910 Cairo Suite 210, Kafralshakh , Cairo, Egypt</p>

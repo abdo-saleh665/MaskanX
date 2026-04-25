@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 import Image from "next/image";
 import { useState } from "react";
 
-import logo from "@/assets/images/logo/logo_01.svg";
 
 const NavMenu = () => {
     const pathname = usePathname();
@@ -24,7 +23,7 @@ const NavMenu = () => {
             <li className="d-block d-lg-none">
                 <div className="logo">
                     <Link href="/" className="d-block">
-                        <Image src={logo} alt="" />
+                        <h4 className="m-0 fw-bold" style={{ color: "inherit" }}>MaskanX</h4>
                     </Link>
                 </div>
             </li>

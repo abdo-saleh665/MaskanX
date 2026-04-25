@@ -25,7 +25,7 @@ const HeaderTwo = ({ style_1, style_2 }: any) => {
                   <div className="d-flex align-items-center">
                      <div className="logo order-lg-0">
                         <Link href="/" className="d-flex align-items-center">
-                           <Image src={style_2 ? logo_3 : style_1 ? logo_2 : logo_1} alt="" />
+                           <h4 className="m-0 fw-bold" style={{ color: "inherit" }}>MaskanX</h4>
                         </Link>
                      </div>
 

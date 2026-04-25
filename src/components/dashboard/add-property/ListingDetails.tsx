@@ -11,7 +11,7 @@ const ListingDetails = () => {
             <div className="col-md-6">
                <div className="dash-input-wrapper mb-30">
                   <label htmlFor="">Size in ft*</label>
-                  <input type="text" placeholder="Ex: 3,210 sqft" />
+                  <input type="number" name="area" required placeholder="Ex: 3210" />
                </div>
             </div>
             <div className="col-md-6">

@@ -20,7 +20,7 @@ const FooterOne = ({ style }: any) => {
                         <div className="bg-wrapper">
                            <div className="logo mb-20">
                               <Link href="/">
-                                 <Image src={style ? footerLogo_2 : footerLogo_1} alt="" />
+                                 <h4 className="m-0 fw-bold" style={{ color: "inherit" }}>MaskanX</h4>
                               </Link>
                            </div>
                            <p className="mb-60 lg-mb-40 md-mb-20">11910 Cairo Suite 210, Kafralshakh , Cairo, Egypt</p>

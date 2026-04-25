@@ -1,0 +1,793 @@
+{
+	"info": {
+		"_postman_id": "maskanx-api-collection",
+		"name": "MaskanX Real Estate API",
+		"description": "Complete API testing collection for MaskanX Real Estate Platform.\n\nBase URL: http://localhost:5000/api\n\nFlow: Signup → Login (auto-saves token) → Use protected endpoints",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:5000/api"
+		},
+		{
+			"key": "token",
+			"value": ""
+		},
+		{
+			"key": "property_id",
+			"value": ""
+		},
+		{
+			"key": "booking_id",
+			"value": ""
+		}
+	],
+	"item": [
+		{
+			"name": "🔐 Auth",
+			"description": "Authentication endpoints - Signup and Login",
+			"item": [
+				{
+					"name": "1. Signup - Register New User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Status code is 201 Created', function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test('Response has success = true', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(true);",
+									"});",
+									"",
+									"pm.test('Response contains success message', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.include('registered');",
+									"});",
+									"",
+									"pm.test('Response time is less than 2000ms', function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+									"});",
+									"",
+									"pm.test('Content-Type is application/json', function () {",
+									"    pm.response.to.have.header('Content-Type', /application\\/json/);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Ahmed Mohamed\",\n  \"email\": \"ahmed_test@example.com\",\n  \"password\": \"StrongPass1!\",\n  \"termsAccepted\": true\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/signup",
+							"host": ["{{base_url}}"],
+							"path": ["auth", "signup"]
+						},
+						"description": "Register a new user account.\n\n**Required Fields:**\n- name (min 3 chars)\n- email (valid format)\n- password (min 8 chars, 1 uppercase, 1 number)\n- termsAccepted (must be true)"
+					}
+				},
+				{
+					"name": "2. Login - Get JWT Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Status code is 200 OK', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Response has success = true', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(true);",
+									"});",
+									"",
+									"pm.test('Response contains JWT token', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.token).to.be.a('string');",
+									"    pm.expect(jsonData.token.length).to.be.above(10);",
+									"});",
+									"",
+									"// Auto-save token to collection variable",
+									"if (pm.response.code === 200) {",
+									"    var jsonData = pm.response.json();",
+									"    if (jsonData.token) {",
+									"        pm.collectionVariables.set('token', jsonData.token);",
+									"        console.log('✅ Token saved automatically!');",
+									"    }",
+									"}",
+									"",
+									"pm.test('Response time is less than 2000ms', function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"ahmed_test@example.com\",\n  \"password\": \"StrongPass1!\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/login",
+							"host": ["{{base_url}}"],
+							"path": ["auth", "login"]
+						},
+						"description": "Login and receive a JWT token.\n\n**The token is automatically saved** to the collection variable `token` and used by all subsequent protected requests."
+					}
+				},
+				{
+					"name": "2b. Login - Invalid Credentials (Error Test)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Status code is 401 Unauthorized', function () {",
+									"    pm.response.to.have.status(401);",
+									"});",
+									"",
+									"pm.test('Response indicates failure', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(false);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"ahmed_test@example.com\",\n  \"password\": \"WrongPassword123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/login",
+							"host": ["{{base_url}}"],
+							"path": ["auth", "login"]
+						},
+						"description": "Test login with invalid credentials to verify error handling."
+					}
+				}
+			]
+		},
+		{
+			"name": "🏠 Properties",
+			"description": "Property CRUD endpoints",
+			"item": [
+				{
+					"name": "3. Get All Properties (Public)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Status code is 200 OK', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Response has success = true', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(true);",
+									"});",
+									"",
+									"pm.test('Response has pagination data', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.data).to.have.property('totalItems');",
+									"    pm.expect(jsonData.data).to.have.property('totalPages');",
+									"    pm.expect(jsonData.data).to.have.property('currentPage');",
+									"});",
+									"",
+									"pm.test('Content-Type is application/json', function () {",
+									"    pm.response.to.have.header('Content-Type', /application\\/json/);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/properties?page=1&limit=10",
+							"host": ["{{base_url}}"],
+							"path": ["properties"],
+							"query": [
+								{ "key": "page", "value": "1" },
+								{ "key": "limit", "value": "10" }
+							]
+						},
+						"description": "Get all properties with pagination. This is a PUBLIC endpoint - no authentication required."
+					}
+				},
+				{
+					"name": "4. Get Property by ID (Public)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Status code is 200 OK', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Response has success = true', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(true);",
+									"});",
+									"",
+									"pm.test('Property data has required fields', function () {",
+									"    var jsonData = pm.response.json();",
+									"    var property = jsonData.data;",
+									"    pm.expect(property).to.have.property('title');",
+									"    pm.expect(property).to.have.property('price');",
+									"    pm.expect(property).to.have.property('location');",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/properties/1",
+							"host": ["{{base_url}}"],
+							"path": ["properties", "1"]
+						},
+						"description": "Get a single property by its ID. PUBLIC endpoint."
+					}
+				},
+				{
+					"name": "5. Create Property (Protected)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Status code is 201 Created', function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test('Response has success = true', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(true);",
+									"});",
+									"",
+									"pm.test('Property was created with correct data', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.data).to.have.property('id');",
+									"    pm.expect(jsonData.data.title).to.include('Modern');",
+									"});",
+									"",
+									"// Save property_id for later use",
+									"if (pm.response.code === 201) {",
+									"    var jsonData = pm.response.json();",
+									"    if (jsonData.data && jsonData.data.id) {",
+									"        pm.collectionVariables.set('property_id', jsonData.data.id);",
+									"        console.log('✅ Property ID saved: ' + jsonData.data.id);",
+									"    }",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Modern Apartment in New Cairo\",\n  \"description\": \"A stunning 3-bedroom apartment with a city view and modern amenities.\",\n  \"price\": 250000,\n  \"location\": \"New Cairo, Egypt\",\n  \"bedrooms\": 3,\n  \"bathrooms\": 2,\n  \"area\": 180\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/properties",
+							"host": ["{{base_url}}"],
+							"path": ["properties"]
+						},
+						"description": "Create a new property listing. Requires JWT authentication.\n\n**Required Fields:**\n- title (min 5 chars)\n- description (min 10 chars)\n- price (positive number)\n- location (min 3 chars)\n- bedrooms (non-negative integer)\n- bathrooms (non-negative integer)\n- area (positive number)"
+					}
+				},
+				{
+					"name": "6. Get My Properties (Protected)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Status code is 200 OK', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Response has success = true', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(true);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/properties/my-properties",
+							"host": ["{{base_url}}"],
+							"path": ["properties", "my-properties"]
+						},
+						"description": "Get properties owned by the authenticated user."
+					}
+				}
+			]
+		},
+		{
+			"name": "📅 Bookings",
+			"description": "Booking management endpoints",
+			"item": [
+				{
+					"name": "7. Create Booking (Protected)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Status code is 201 Created', function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test('Response has success = true', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(true);",
+									"});",
+									"",
+									"pm.test('Booking has pending status', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.data.status).to.eql('pending');",
+									"});",
+									"",
+									"// Save booking_id",
+									"if (pm.response.code === 201) {",
+									"    var jsonData = pm.response.json();",
+									"    if (jsonData.data && jsonData.data.id) {",
+									"        pm.collectionVariables.set('booking_id', jsonData.data.id);",
+									"    }",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"property_id\": 1,\n  \"start_date\": \"2026-05-01\",\n  \"end_date\": \"2026-05-15\",\n  \"total_price\": 5000\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/bookings",
+							"host": ["{{base_url}}"],
+							"path": ["bookings"]
+						},
+						"description": "Create a new booking for a property.\n\n**Required Fields:**\n- property_id (valid property ID)\n- start_date (ISO date string)\n- end_date (must be after start_date)\n- total_price (positive number)"
+					}
+				},
+				{
+					"name": "8. Get My Bookings (Protected)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Status code is 200 OK', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Response has success = true', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(true);",
+									"});",
+									"",
+									"pm.test('Response data is an array', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.data).to.be.an('array');",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/bookings/my-bookings",
+							"host": ["{{base_url}}"],
+							"path": ["bookings", "my-bookings"]
+						},
+						"description": "Get all bookings for the authenticated user."
+					}
+				}
+			]
+		},
+		{
+			"name": "💬 Inquiries",
+			"description": "Property inquiry endpoints",
+			"item": [
+				{
+					"name": "9. Create Inquiry (Protected)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Status code is 201 Created', function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test('Response has success = true', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(true);",
+									"});",
+									"",
+									"pm.test('Inquiry has open status', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.data.status).to.eql('open');",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"property_id\": 1,\n  \"message\": \"Hello, is this property still available for rent? I am interested in scheduling a visit.\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/inquiries",
+							"host": ["{{base_url}}"],
+							"path": ["inquiries"]
+						},
+						"description": "Send an inquiry about a property.\n\n**Required Fields:**\n- property_id (valid property ID)\n- message (min 10 chars)"
+					}
+				},
+				{
+					"name": "10. Get My Inquiries (Protected)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Status code is 200 OK', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Response has success = true', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(true);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/inquiries/my-inquiries",
+							"host": ["{{base_url}}"],
+							"path": ["inquiries", "my-inquiries"]
+						},
+						"description": "Get all inquiries sent by the authenticated user."
+					}
+				}
+			]
+		},
+		{
+			"name": "⭐ Reviews",
+			"description": "Property review endpoints",
+			"item": [
+				{
+					"name": "11. Create Review (Protected)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Status code is 201 Created', function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test('Response has success = true', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(true);",
+									"});",
+									"",
+									"pm.test('Review has rating between 1-5', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.data.rating).to.be.within(1, 5);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"property_id\": 1,\n  \"rating\": 5,\n  \"comment\": \"Excellent property! Very clean, modern, and well-maintained.\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/reviews",
+							"host": ["{{base_url}}"],
+							"path": ["reviews"]
+						},
+						"description": "Add a review for a property.\n\n**Required Fields:**\n- property_id (valid property ID)\n- rating (integer 1-5)\n- comment (min 5 chars)"
+					}
+				},
+				{
+					"name": "12. Get Property Reviews (Public)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Status code is 200 OK', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Response has success = true', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(true);",
+									"});",
+									"",
+									"pm.test('Response data is an array', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.data).to.be.an('array');",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/reviews/property/1",
+							"host": ["{{base_url}}"],
+							"path": ["reviews", "property", "1"]
+						},
+						"description": "Get all reviews for a specific property. PUBLIC endpoint."
+					}
+				}
+			]
+		},
+		{
+			"name": "👤 Profile",
+			"description": "User profile endpoints",
+			"item": [
+				{
+					"name": "13. Get Profile (Protected)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Status code is 200 OK', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Profile has name and email', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('name');",
+									"    pm.expect(jsonData).to.have.property('email');",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/profile",
+							"host": ["{{base_url}}"],
+							"path": ["profile"]
+						},
+						"description": "Get the authenticated user's profile."
+					}
+				},
+				{
+					"name": "14. Update Profile (Protected)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Status code is 200 OK', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Profile updated message', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.include('updated');",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstName\": \"Ahmed\",\n  \"lastName\": \"Mohamed\",\n  \"phoneNumber\": \"01012345678\",\n  \"about\": \"Real estate investor based in Cairo, Egypt.\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/profile",
+							"host": ["{{base_url}}"],
+							"path": ["profile"]
+						},
+						"description": "Update the authenticated user's profile.\n\n**Required Fields:**\n- firstName\n- lastName\n- phoneNumber\n- about"
+					}
+				}
+			]
+		},
+		{
+			"name": "📊 Stats",
+			"description": "Dashboard statistics",
+			"item": [
+				{
+					"name": "15. Get Dashboard Stats (Protected)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test('Status code is 200 OK', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Stats has totalProperties', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('totalProperties');",
+									"});",
+									"",
+									"pm.test('All stats are numbers', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.totalProperties).to.be.a('number');",
+									"    pm.expect(jsonData.totalPending).to.be.a('number');",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/stats",
+							"host": ["{{base_url}}"],
+							"path": ["stats"]
+						},
+						"description": "Get dashboard statistics including total properties, pending, views, and favourites."
+					}
+				}
+			]
+		}
+	]
+}

@@ -1,15 +1,28 @@
-# MaskanX — Next-Generation Property Platform 🏗️
+<p align="center">
+  <img src="public/assets/images/logo/logo_01.svg" alt="MaskanX Logo" width="200" />
+</p>
 
-![React](https://img.shields.io/badge/React-18-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
-![Next.js](https://img.shields.io/badge/Next.js-14-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)
-![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
-![Node.js](https://img.shields.io/badge/Node.js-Express-43853D?style=for-the-badge&logo=node.js&logoColor=white)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-336791?style=for-the-badge&logo=postgresql&logoColor=white)
-![Sequelize](https://img.shields.io/badge/Sequelize-6-52B0E7?style=for-the-badge&logo=sequelize&logoColor=white)
-![JWT](https://img.shields.io/badge/JWT-Auth-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white)
+<h1 align="center">MaskanX — مسكن إكس</h1>
 
-> **Advanced Web Programming (AWP) — Course Project**  
-> Faculty of Computers and Information, New Mansoura University
+<p align="center">
+  <strong>Next-Generation Real Estate Platform</strong><br/>
+  <em>Advanced Web Programming (AWP) — University Project</em>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Next.js-16-black?style=for-the-badge&logo=next.js" alt="Next.js" />
+  <img src="https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react&logoColor=black" alt="React" />
+  <img src="https://img.shields.io/badge/TypeScript-5-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/Express-4-000000?style=for-the-badge&logo=express" alt="Express" />
+  <img src="https://img.shields.io/badge/PostgreSQL-16-4169E1?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL" />
+  <img src="https://img.shields.io/badge/Tailwind_CSS-3-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="Tailwind CSS" />
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/license-MIT-green?style=flat-square" alt="License" />
+  <img src="https://img.shields.io/badge/status-production--ready-brightgreen?style=flat-square" alt="Status" />
+  <img src="https://img.shields.io/badge/API-Swagger_3.0-85EA2D?style=flat-square&logo=swagger&logoColor=black" alt="Swagger" />
+</p>
 
 ---
 
@@ -19,263 +32,326 @@
 - [System Architecture](#-system-architecture)
 - [Tech Stack](#-tech-stack)
 - [Features](#-features)
+- [Database Design](#-database-design-erd)
+- [API Reference](#-api-reference)
+- [Getting Started](#-getting-started)
 - [Project Structure](#-project-structure)
-- [Database Schema](#-database-schema)
-- [API Documentation](#-api-documentation)
-- [Installation & Setup](#️-installation--setup)
-- [Environment Configuration](#-environment-configuration)
-- [Running the Project](#-running-the-project)
 - [Security Implementation](#-security-implementation)
-- [Team Members](#-team-members)
+- [Screenshots](#-screenshots)
 - [License](#-license)
 
 ---
 
-## 🌟 Overview
+## 🏠 Overview
 
-**MaskanX** is a full-stack real estate platform built as a course project for the Advanced Web Programming (AWP) module. The platform enables users to browse, list, buy, and sell properties through a modern responsive interface backed by a robust RESTful API.
+**MaskanX** (مسكن إكس) is a full-stack, enterprise-grade real estate platform designed for the modern property market. The name combines *"Maskan"* (مسكن — Arabic for *dwelling*) with **X** — symbolizing next-generation technology.
 
-The project demonstrates proficiency in:
-- **Frontend**: React 18 + Next.js 14 with TypeScript, responsive design, and state management
-- **Backend**: Node.js/Express REST API with Sequelize ORM and PostgreSQL
-- **Security**: JWT-based authentication, password hashing with bcrypt, and role-based access
-- **Architecture**: Clean MVC separation between frontend and backend layers
+Built with a strict **MVC architecture**, the platform empowers users to browse, list, book, review, and inquire about real estate properties — all backed by robust JWT authentication, role-based access control, and comprehensive API documentation.
 
----
+### 🎯 Project Goals
 
-## 🏗️ System Architecture
-
-```
-┌─────────────────────────────────────────────────────────┐
-│                    CLIENT (Browser)                      │
-│              React 18 + Next.js 14 (SSR)                │
-│         TypeScript / Redux Toolkit / Axios              │
-└──────────────────────┬──────────────────────────────────┘
-                       │ HTTP/REST (JSON)
-                       ▼
-┌─────────────────────────────────────────────────────────┐
-│                  API SERVER (:5000)                       │
-│              Node.js + Express.js                        │
-│     ┌────────────┬──────────────┬──────────────┐        │
-│     │ Auth       │ Profile      │ Property     │        │
-│     │ Controller │ Routes       │ Routes       │        │
-│     └─────┬──────┴──────┬───────┴──────┬───────┘        │
-│           │  JWT Middleware (verify)    │                │
-│     ┌─────▼─────────────▼──────────────▼───────┐        │
-│     │           Sequelize ORM (v6)              │        │
-│     └─────────────────┬────────────────────────┘        │
-└───────────────────────┬─────────────────────────────────┘
-                        │ TCP/5432
-                        ▼
-              ┌──────────────────┐
-              │   PostgreSQL DB   │
-              │   (users table)   │
-              └──────────────────┘
-```
+| Goal | Description |
+|------|-------------|
+| **Full-Stack Mastery** | Demonstrate end-to-end proficiency in modern web development |
+| **Security-First** | Implement industry-standard authentication & authorization patterns |
+| **Clean Architecture** | Enforce strict MVC with Services layer separation |
+| **API Documentation** | Auto-generate interactive Swagger docs from code annotations |
+| **Production Quality** | Rate limiting, input validation, structured logging, error handling |
 
 ---
 
-## 🛠️ Tech Stack
+## 🏗 System Architecture
 
-### Frontend
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                        CLIENT BROWSER                              │
+│                     (Next.js SSR + CSR)                             │
+└──────────────────────────┬──────────────────────────────────────────┘
+                           │  HTTP/HTTPS
+                           ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│                      NEXT.JS FRONTEND                              │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────────────┐   │
+│  │  Pages/   │  │Components│  │  Redux   │  │    Services      │   │
+│  │  Routing  │  │  (UI)    │  │  Store   │  │  (Axios Client)  │   │
+│  └──────────┘  └──────────┘  └──────────┘  └────────┬─────────┘   │
+│                                                      │             │
+└──────────────────────────────────────────────────────┼─────────────┘
+                                                       │ REST API
+                                                       ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│                      EXPRESS BACKEND                               │
+│                                                                     │
+│  ┌──────────┐  ┌──────────────┐  ┌─────────────────────────────┐   │
+│  │  Morgan   │  │ Rate Limiter │  │     CORS Middleware         │   │
+│  │  Logger   │  │  (100/15min) │  │  (Origin Whitelisting)     │   │
+│  └──────────┘  └──────────────┘  └─────────────────────────────┘   │
+│                                                                     │
+│  ┌─────────────────────────────────────────────────────────────┐   │
+│  │                    ROUTES LAYER                              │   │
+│  │  auth • properties • bookings • reviews • inquiries • stats │   │
+│  └─────────────────────────┬───────────────────────────────────┘   │
+│                             │                                       │
+│  ┌─────────────────────────▼───────────────────────────────────┐   │
+│  │               CONTROLLERS LAYER (Request Handling)           │   │
+│  │  AuthController • PropertyController • BookingController     │   │
+│  │  InquiryController • ReviewController                        │   │
+│  └─────────────────────────┬───────────────────────────────────┘   │
+│                             │                                       │
+│  ┌─────────────────────────▼───────────────────────────────────┐   │
+│  │               SERVICES LAYER (Business Logic)                │   │
+│  │  AuthService • PropertyService • BookingService              │   │
+│  │  InquiryService • ReviewService                              │   │
+│  └─────────────────────────┬───────────────────────────────────┘   │
+│                             │                                       │
+│  ┌─────────────────────────▼───────────────────────────────────┐   │
+│  │              MODELS LAYER (Sequelize ORM)                    │   │
+│  │  User • Property • Booking • Review • Inquiry                │   │
+│  └─────────────────────────┬───────────────────────────────────┘   │
+│                             │                                       │
+└─────────────────────────────┼───────────────────────────────────────┘
+                              │ SQL
+                              ▼
+                    ┌──────────────────┐
+                    │   PostgreSQL DB  │
+                    │  (5 Tables, FK   │
+                    │   Constraints)   │
+                    └──────────────────┘
+```
+
+---
+
+## 🛠 Tech Stack
+
+### Frontend Ecosystem
 
 | Technology | Version | Purpose |
-|-----------|---------|---------|
-| React | 18.x | UI component library |
-| Next.js | 14.0.4 | SSR framework & routing |
-| TypeScript | 5.x | Type safety |
-| Redux Toolkit | 2.x | Global state management |
-| Axios | 1.8.x | HTTP client for API calls |
-| SCSS / Bootstrap | 5.3.x | Styling & responsive grid |
-| Framer Motion | — | Animations |
-| React Hook Form + Yup | — | Form validation |
+|:-----------|:--------|:--------|
+| **Next.js** | 16.x | React framework with SSR/SSG |
+| **React** | 18.x | Component-based UI library |
+| **TypeScript** | 5.x | Type-safe JavaScript |
+| **Redux Toolkit** | 2.x | Global state management |
+| **Tailwind CSS** | 3.x | Utility-first CSS framework |
+| **SCSS** | — | Advanced stylesheets |
+| **Framer Motion** | 12.x | Declarative animations |
+| **Axios** | 1.x | HTTP client for API calls |
+| **React Hook Form** | 7.x | Performant form handling |
+| **Yup** | 1.x | Schema-based form validation |
 
-### Backend
+### Backend Ecosystem
 
 | Technology | Version | Purpose |
-|-----------|---------|---------|
-| Node.js | 18+ | Runtime environment |
-| Express.js | 4.21.x | REST API framework |
-| Sequelize | 6.37.x | ORM for PostgreSQL |
-| PostgreSQL | 14+ | Relational database |
-| JWT | 9.x | Token-based authentication |
-| bcryptjs | 3.x | Password hashing (10 salt rounds) |
-| dotenv | 16.x | Environment configuration |
-| CORS | 2.8.x | Cross-origin resource sharing |
+|:-----------|:--------|:--------|
+| **Node.js** | 20+ | JavaScript runtime |
+| **Express.js** | 4.x | Web framework |
+| **TypeScript** | 5.x | Type-safe server code |
+| **Sequelize** | 6.x | PostgreSQL ORM |
+| **PostgreSQL** | 16.x | Relational database |
+| **JWT** | 9.x | Token-based authentication |
+| **bcryptjs** | 3.x | Password hashing (12 rounds) |
+| **Zod** | 3.x | Runtime input validation |
+| **Swagger** | 6.x | OpenAPI 3.0 documentation |
+| **Winston** | 3.x | Structured logging |
+| **Morgan** | 1.x | HTTP request logging |
 
 ---
 
-## 🎯 Features
+## ✨ Features
 
-### User-Facing
-- 🏠 **Property Listings** — Browse, search, and filter properties with multiple view layouts
-- 🔍 **Advanced Search** — 35+ filters including price range, location, and property type
-- 📊 **User Dashboard** — Manage listings, favourites, saved searches, and account settings
-- 📝 **Property CRUD** — Add, update, and delete property listings
-- 🔒 **Authentication** — Secure signup/login with JWT tokens
-- 👤 **Profile Management** — Edit personal details and change password
-- 📱 **Fully Responsive** — Optimized for desktop, tablet, and mobile
+### 🔐 Authentication & Authorization
+- JWT-based stateless authentication with configurable expiry
+- bcrypt password hashing with salt rounds
+- Role-based access control (Admin / User)
+- Protected route middleware with token verification
+- Auth guard on frontend with redirect logic
 
-### Technical
-- 🔐 **JWT Authentication** with environment-configured secrets
-- 🛡️ **Password Hashing** using bcryptjs with configurable salt rounds
-- 📡 **RESTful API** following standard HTTP methods and status codes
-- 🗄️ **Sequelize ORM** with model-based database management
-- ⚡ **Server-Side Rendering** via Next.js 14 for SEO optimization
+### 🏡 Property Management
+- Full CRUD operations for property listings
+- Advanced filtering (location, price range, bedrooms, status)
+- Pagination with configurable page sizes
+- Owner-restricted edit/delete operations
+- Property status management (available / sold / rented)
 
----
+### 📅 Booking System
+- Schedule property viewings with date ranges
+- Automatic price calculation
+- Status tracking (pending → confirmed → cancelled)
+- User-specific booking history
 
-## 📂 Project Structure
+### ⭐ Reviews & Ratings
+- Property rating system (1–5 stars)
+- Text reviews with author attribution
+- One review per user per property enforcement
 
-```
-MaskanX/
-├── public/                    # Static assets (images, icons, fonts)
-├── src/                       # Frontend source code
-│   ├── app/                   # Next.js App Router pages
-│   │   ├── dashboard/         # User dashboard pages
-│   │   ├── listing_*/         # Property listing variants
-│   │   ├── listing_details_*/ # Property detail views
-│   │   ├── contact/           # Contact page
-│   │   └── layout.tsx         # Root layout with meta tags
-│   ├── components/            # Reusable React components
-│   │   ├── dashboard/         # Dashboard UI components
-│   │   ├── homes/             # Homepage sections
-│   │   ├── inner-listing/     # Listing page components
-│   │   ├── forms/             # Form components
-│   │   └── common/            # Shared UI elements
-│   ├── data/                  # Static data & constants
-│   ├── hooks/                 # Custom React hooks
-│   ├── layouts/               # Header & footer layouts
-│   ├── modals/                # Modal/overlay components
-│   ├── redux/                 # Redux store & slices
-│   ├── styles/                # SCSS stylesheets
-│   ├── types/                 # TypeScript type definitions
-│   ├── ui/                    # Base UI primitives
-│   └── utils/                 # Utility functions & API client
-│
-├── real-estate-backend/       # Backend API server
-│   └── src/
-│       ├── config/            # Database configuration
-│       ├── controllers/       # Request handlers (MVC)
-│       ├── middleware/        # Auth middleware (JWT verify)
-│       ├── models/            # Sequelize data models
-│       ├── routes/            # Express route definitions
-│       ├── app.ts             # Express app setup
-│       └── server.ts          # Server entry point
-│
-├── package.json               # Frontend dependencies
-├── tsconfig.json              # TypeScript configuration
-└── README.md                  # This file
-```
+### 📩 Inquiry System
+- Contact property owners through the platform
+- Inquiry status management (pending / responded / closed)
+- Message threading per property
+
+### 📊 Admin Dashboard
+- Real-time statistics (total properties, available listings, inquiries)
+- Property management panel
+- User profile management with editable fields
+- Interactive charts and data visualization
 
 ---
 
-## 🗄️ Database Schema
+## 📐 Database Design (ERD)
 
-### Users Table
+<p align="center">
+  <img src="ERD.png" alt="Entity Relationship Diagram" width="800" />
+</p>
 
-| Column | Type | Constraints | Description |
-|--------|------|------------|-------------|
-| `id` | INTEGER | PK, AUTO_INCREMENT | User identifier |
-| `name` | STRING | NOT NULL | Display name |
-| `email` | STRING | NOT NULL, UNIQUE | Login email |
-| `password` | STRING | NOT NULL | Hashed password (bcrypt) |
-| `termsAccepted` | BOOLEAN | NOT NULL | Terms agreement flag |
-| `firstName` | STRING | NULLABLE | First name |
-| `lastName` | STRING | NULLABLE | Last name |
-| `phoneNumber` | STRING | NULLABLE | Contact phone |
-| `about` | TEXT | NULLABLE | Bio/description |
-| `createdAt` | TIMESTAMP | AUTO | Record creation time |
-| `updatedAt` | TIMESTAMP | AUTO | Last update time |
+### Relationships
+
+```
+  User (1) ──────< (*) Property      A user can own many properties
+  User (1) ──────< (*) Booking       A user can make many bookings
+  User (1) ──────< (*) Review        A user can write many reviews
+  User (1) ──────< (*) Inquiry       A user can send many inquiries
+  Property (1) ──< (*) Booking       A property can have many bookings
+  Property (1) ──< (*) Review        A property can receive many reviews
+  Property (1) ──< (*) Inquiry       A property can receive many inquiries
+```
+
+### Tables Summary
+
+| Table | Key Columns | Constraints |
+|:------|:------------|:------------|
+| `users` | id, name, email, password, role | email UNIQUE, password NOT NULL |
+| `properties` | id, title, price, location, owner_id | FK → users, price NOT NULL |
+| `bookings` | id, property_id, user_id, start_date, end_date | FK → users, FK → properties |
+| `reviews` | id, property_id, user_id, rating, comment | FK → users, FK → properties |
+| `inquiries` | id, property_id, user_id, message, status | FK → users, FK → properties |
 
 ---
 
-## 📡 API Documentation
+## 📡 API Reference
 
-**Base URL:** `http://localhost:5000/api`
+> 📖 **Interactive documentation available at** [`http://localhost:5000/api-docs`](http://localhost:5000/api-docs) **(Swagger UI)**
 
-### Authentication Routes (`/api/auth`)
+### Base URL: `http://localhost:5000/api`
 
-| Method | Endpoint | Description | Auth Required |
-|--------|----------|-------------|:---:|
-| `POST` | `/auth/signup` | Register new user | ❌ |
-| `POST` | `/auth/login` | Authenticate & receive JWT | ❌ |
+### Authentication
 
-### Protected Routes (`/api`) — Require `Authorization: Bearer <token>`
+| Method | Endpoint | Description | Auth |
+|:-------|:---------|:------------|:-----|
+| `POST` | `/auth/register` | Create new account | ❌ |
+| `POST` | `/auth/login` | Login & receive JWT | ❌ |
 
-| Method | Endpoint | Description | Auth Required |
-|--------|----------|-------------|:---:|
-| `GET` | `/profile` | Fetch authenticated user's profile | ✅ |
-| `PUT` | `/profile` | Update profile details | ✅ |
+### User Profile
 
-### Request/Response Examples
+| Method | Endpoint | Description | Auth |
+|:-------|:---------|:------------|:-----|
+| `GET` | `/profile` | Get current user profile | 🔒 |
+| `PUT` | `/profile` | Update profile fields | 🔒 |
 
-#### POST `/api/auth/signup`
-```json
-// Request Body
+### Properties
+
+| Method | Endpoint | Description | Auth |
+|:-------|:---------|:------------|:-----|
+| `GET` | `/properties` | List all (paginated) | ❌ |
+| `GET` | `/properties/:id` | Get single property | ❌ |
+| `POST` | `/properties` | Create new listing | 🔒 |
+| `PUT` | `/properties/:id` | Update listing (owner only) | 🔒 |
+| `DELETE` | `/properties/:id` | Delete listing (owner only) | 🔒 |
+
+### Bookings
+
+| Method | Endpoint | Description | Auth |
+|:-------|:---------|:------------|:-----|
+| `GET` | `/bookings` | List user's bookings | 🔒 |
+| `POST` | `/bookings` | Create a booking | 🔒 |
+
+### Reviews
+
+| Method | Endpoint | Description | Auth |
+|:-------|:---------|:------------|:-----|
+| `GET` | `/reviews/:propertyId` | Get property reviews | ❌ |
+| `POST` | `/reviews` | Submit a review | 🔒 |
+
+### Inquiries
+
+| Method | Endpoint | Description | Auth |
+|:-------|:---------|:------------|:-----|
+| `GET` | `/inquiries` | List user's inquiries | 🔒 |
+| `POST` | `/inquiries` | Send an inquiry | 🔒 |
+
+### Statistics
+
+| Method | Endpoint | Description | Auth |
+|:-------|:---------|:------------|:-----|
+| `GET` | `/stats` | Dashboard statistics | 🔒 |
+
+> 🔒 = Requires `Authorization: Bearer <token>` header
+
+### Example Request
+
+```bash
+# Register a new user
+curl -X POST http://localhost:5000/api/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Ahmad",
+    "email": "ahmad@example.com",
+    "password": "SecurePass123!",
+    "termsAccepted": true
+  }'
+
+# Response
 {
-  "name": "Ahmed Mohamed",
-  "email": "ahmed@example.com",
-  "password": "SecurePass123!",
-  "termsAccepted": true
-}
-
-// Response (201 Created)
-{
-  "message": "User created successfully!",
-  "user": { "id": 1, "name": "Ahmed Mohamed", "email": "ahmed@example.com" }
-}
-```
-
-#### POST `/api/auth/login`
-```json
-// Request Body
-{
-  "email": "ahmed@example.com",
-  "password": "SecurePass123!"
-}
-
-// Response (200 OK)
-{
-  "message": "Login successful!",
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-}
-```
-
-#### GET `/api/profile`
-```
-Headers: Authorization: Bearer <JWT_TOKEN>
-
-// Response (200 OK)
-{
-  "name": "Ahmed Mohamed",
-  "email": "ahmed@example.com",
-  "firstName": "Ahmed",
-  "lastName": "Mohamed",
-  "phoneNumber": "+201234567890",
-  "about": "Real estate enthusiast."
+  "message": "User registered successfully",
+  "token": "eyJhbGciOiJIUzI1NiIs..."
 }
 ```
 
 ---
 
-## ⚙️ Installation & Setup
+## 🚀 Getting Started
 
 ### Prerequisites
 
-| Requirement | Version |
-|------------|---------|
-| Node.js | 18.x or later |
-| npm | 9.x or later |
-| PostgreSQL | 14.x or later |
+| Requirement | Minimum Version |
+|:------------|:----------------|
+| Node.js | v18.0+ |
+| npm | v9.0+ |
+| PostgreSQL | v14.0+ |
+| Git | v2.30+ |
 
-### 1. Clone the Repository
+### 1️⃣ Clone the Repository
+
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/abdo-saleh665/MaskanX.git
 cd MaskanX
 ```
 
-### 2. Install Dependencies
+### 2️⃣ Configure Environment Variables
+
+Create `real-estate-backend/.env`:
+
+```env
+PORT=5000
+DB_NAME=maskanx_db
+DB_USER=postgres
+DB_PASSWORD=your_postgres_password
+DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_DIALECT=postgres
+
+JWT_SECRET=your_super_secret_jwt_key_here
+```
+
+> ⚠️ **Never commit `.env` files** — they are excluded via `.gitignore`
+
+### 3️⃣ Setup PostgreSQL Database
+
+```sql
+-- Connect to PostgreSQL and create the database
+CREATE DATABASE maskanx_db;
+```
+
+### 4️⃣ Install Dependencies & Run
+
 ```bash
 # Install frontend dependencies
 npm install
@@ -284,81 +360,130 @@ npm install
 cd real-estate-backend
 npm install
 cd ..
+
+# Option A: Run both simultaneously
+npm run dev:all
+
+# Option B: Run separately (in two terminals)
+npm run frontend    # → http://localhost:3000
+npm run backend     # → http://localhost:5000
 ```
 
-### 3. Setup PostgreSQL Database
-```sql
--- Connect to PostgreSQL
-psql -U postgres
+### 5️⃣ Verify
 
--- Create the database
-CREATE DATABASE maskanx_db;
+| Service | URL | Expected |
+|:--------|:----|:---------|
+| Frontend | http://localhost:3000 | MaskanX homepage |
+| Backend API | http://localhost:5000/api/properties | JSON property list |
+| Swagger Docs | http://localhost:5000/api-docs | Interactive API docs |
+
+---
+
+## 📁 Project Structure
+
+```
+MaskanX/
+├── public/                          # Static assets
+│   ├── assets/
+│   │   ├── css/                     # Compiled stylesheets
+│   │   ├── fonts/                   # Custom web fonts
+│   │   ├── images/                  # Property images, logos, icons
+│   │   └── scss/                    # SCSS source files (29 partials)
+│   └── favicon.png
+│
+├── src/                             # Frontend source code
+│   ├── app/                         # Next.js App Router pages
+│   │   ├── (dashboard)/             # Dashboard route group
+│   │   ├── contact/                 # Contact page
+│   │   ├── listing_01..17/          # Property listing variants
+│   │   ├── listing_details_01..06/  # Property detail variants
+│   │   ├── layout.tsx               # Root layout with SEO meta
+│   │   └── page.tsx                 # Homepage
+│   ├── components/                  # Reusable React components
+│   │   ├── dashboard/               # Dashboard panels
+│   │   ├── forms/                   # Login, Register forms
+│   │   ├── homes/                   # Home page sections
+│   │   ├── properties/              # Property display components
+│   │   └── common/                  # Shared UI components
+│   ├── hooks/                       # Custom React hooks
+│   │   ├── useAuth.ts               # Authentication hook
+│   │   └── useShortedProperty.ts    # Property sorting hook
+│   ├── layouts/                     # Header/Footer layouts
+│   ├── redux/                       # Redux store & slices
+│   ├── services/                    # API service layer (Axios)
+│   ├── styles/                      # Global styles
+│   ├── types/                       # TypeScript type definitions
+│   └── utils/                       # Utility functions
+│
+├── real-estate-backend/             # Backend source code
+│   ├── src/
+│   │   ├── controllers/             # Request handlers (5 controllers)
+│   │   ├── services/                # Business logic layer (5 services)
+│   │   ├── models/                  # Sequelize models (5 models + index)
+│   │   ├── routes/                  # Express route definitions (7 files)
+│   │   ├── middlewares/             # Auth, rate-limit, validation, errors
+│   │   ├── validations/             # Zod schemas for request validation
+│   │   ├── config/                  # DB config, Swagger config
+│   │   ├── utils/                   # Logger, helpers
+│   │   ├── app.ts                   # Express app setup
+│   │   └── server.ts                # Server entry point
+│   ├── migrations/                  # Sequelize database migrations
+│   ├── package.json
+│   └── tsconfig.json
+│
+├── MaskanX_Postman_Collection.json  # Postman API test collection
+├── ERD.png                          # Database ER diagram
+├── package.json                     # Root package.json
+├── tailwind.config.js               # Tailwind CSS configuration
+├── tsconfig.json                    # TypeScript configuration
+└── README.md                        # ← You are here
 ```
 
 ---
 
-## 🔧 Environment Configuration
+## 🔒 Security Implementation
 
-### Backend (`real-estate-backend/.env`)
-```env
-PORT=5000
-DB_NAME=maskanx_db
-DB_USER=postgres
-DB_PASSWORD=your_db_password
-DB_HOST=localhost
-DB_PORT=5432
-JWT_SECRET=your_jwt_secret_key_here
-```
-
-### Frontend (`.env.local`)
-```env
-NEXT_PUBLIC_API_URL=http://localhost:5000/api
-```
+| Layer | Mechanism | Details |
+|:------|:----------|:--------|
+| **Authentication** | JWT (HS256) | Stateless tokens with configurable expiry |
+| **Password Storage** | bcryptjs | Salted hashing with 12 rounds |
+| **Input Validation** | Zod schemas | Runtime type checking on all endpoints |
+| **Rate Limiting** | express-rate-limit | 100 requests / 15 minutes per IP |
+| **CORS** | cors middleware | Configurable origin whitelisting |
+| **SQL Injection** | Sequelize ORM | Parameterized queries by default |
+| **XSS Protection** | React DOM | Automatic output encoding |
+| **Request Logging** | Morgan + Winston | Daily rotating log files |
+| **Error Handling** | Global middleware | Sanitized error responses in production |
+| **Route Protection** | Auth middleware | Token verification on protected endpoints |
 
 ---
 
-## 🚀 Running the Project
+## 📸 Screenshots
 
-```bash
-# Terminal 1 — Start Backend Server
-cd real-estate-backend
-npm run dev
-# Server runs on http://localhost:5000
+### Swagger API Documentation
+> Access the interactive API portal at [`http://localhost:5000/api-docs`](http://localhost:5000/api-docs) after starting the backend server.
 
-# Terminal 2 — Start Frontend
-npm run dev
-# App opens on http://localhost:3000
-```
+### Postman Collection
+> Import `MaskanX_Postman_Collection.json` into Postman for a ready-to-use test suite covering all API endpoints.
 
 ---
 
-## 🔐 Security Implementation
+## 👤 Author
 
-| Feature | Implementation |
-|---------|---------------|
-| Password Storage | bcryptjs with 10 salt rounds — never stored in plaintext |
-| Authentication | JWT tokens with 1-hour expiry, stored client-side |
-| Secret Management | All secrets via `.env` files (excluded from version control) |
-| Route Protection | Custom `authenticateUser` middleware validates JWT on protected routes |
-| Input Validation | Request body validation before database operations |
-| CORS | Configured for cross-origin API access |
+**Abdelrahman Yousry Saleh**
+- 📧 Email: abdo.saleh2399@gmail.com
+- 🎓 New Mansoura University — Faculty of Computer Science
+- 📚 Course: Advanced Web Programming (AWP)
 
 ---
 
-## 👥 Team Members
+## 📄 License
 
-| Name | Role | Contact |
-|------|------|---------|
-| **Abdelrahman Yousry Saleh** | Full-Stack Developer | abdo.saleh2399@gmail.com |
-
-> **Course:** Advanced Web Programming (AWP)  
-> **University:** New Mansoura University  
-> **Faculty:** Faculty of Computers and Information
+This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
 
 ---
 
-## 📜 License
-
-This project is developed for academic purposes as part of the AWP course at New Mansoura University.
-
-Licensed under the [MIT License](LICENSE).
+<p align="center">
+  <sub>Built with ❤️ for academic excellence</sub><br/>
+  <sub>MaskanX © 2026 — All rights reserved</sub>
+</p>
