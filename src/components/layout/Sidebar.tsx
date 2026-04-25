@@ -8,10 +8,7 @@ export const Sidebar = () => {
       
       {/* Brand Signature */}
       <div>
-        <div className="w-full px-8 mb-12 flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-indigo-600 to-indigo-400 flex items-center justify-center shadow-lg shadow-indigo-500/30">
-            <Home className="w-5 h-5 text-white" />
-          </div>
+        <div className="w-full px-8 mb-12 flex items-center">
           <div>
             <h2 className="text-2xl font-bold text-white font-outfit tracking-wider">MaskanX</h2>
             <p className="text-[10px] text-indigo-400 font-semibold tracking-[0.2em] uppercase mt-0.5">Admin Portal</p>
