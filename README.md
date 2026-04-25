@@ -424,10 +424,19 @@ MaskanX/
 
 ## 📸 Screenshots
 
-### Swagger API Documentation
+### 🏠 Home Page
+![Home Page](public/assets/images/screenshots/home.png)
+
+### 📋 Property Listings
+![Listings Page](public/assets/images/screenshots/listings.png)
+
+### ✉️ Contact Page
+![Contact Page](public/assets/images/screenshots/contact.png)
+
+### 📡 API Documentation (Swagger)
 > Access the interactive API portal at [`http://localhost:5000/api-docs`](http://localhost:5000/api-docs) after starting the backend server.
 
-### Postman Collection
+### 🧪 Postman Collection
 > Import `MaskanX_Postman_Collection.json` into Postman for a ready-to-use test suite covering all API endpoints.
 
 ---
